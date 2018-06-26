@@ -9,6 +9,7 @@ import numpy as np
 import pdb
 import rawpy
 import glob
+import cv2
 
 
 input_dir = './dataset/Sony/short/'
@@ -157,7 +158,11 @@ for test_id in test_ids:
         gt_full = np.expand_dims(np.float32(im/65535.0),axis = 0)
 
         input_full = np.minimum(input_full,1.0)
-         
+
+        # cv2.imshow('images', input_full[0, :, :, :3])
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
+
         output =sess.run(out_image,feed_dict={in_image: input_full})
         output = np.minimum(np.maximum(output,0),1)
 
