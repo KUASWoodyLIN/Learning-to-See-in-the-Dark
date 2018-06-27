@@ -3,6 +3,7 @@
 from __future__ import division
 import os, time
 import scipy.misc
+import cv2
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 from tensorflow.contrib.layers.python.layers import initializers
@@ -13,9 +14,9 @@ import rawpy
 import glob
 
 # input_dir = './dataset/BDD/'
-input_dir = '/home/share/dataset/BDD/day_night_seperate/val/night/'
+input_dir = '/home/woodylin/dataset/BDD/day_night_separate/val/night/'
 checkpoint_dir = './checkpoint/Sony/'
-result_dir = '/home/share/dataset/BDD/day_night_seperate/val/night/sid_sony/'
+result_dir = '/home/woodylin/dataset/BDD/day_night_separate/val/sid_sony/'
 
 
 ps = 512  # patch size for training
@@ -131,6 +132,7 @@ for file in files:
     output = np.minimum(np.maximum(output, 0), 1)
 
     output = output[0, :, :, :]
+    output = cv2.resize(output, (1280, 720))
 
     scipy.misc.toimage(output * 255, high=255, low=0, cmin=0, cmax=255).save(
         result_dir + file_name)
